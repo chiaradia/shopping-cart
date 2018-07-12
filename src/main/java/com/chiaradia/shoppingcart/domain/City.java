@@ -1,5 +1,7 @@
 package com.chiaradia.shoppingcart.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ public class City implements Serializable
     private Integer id;
     private String name;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "state_id")
     private State state;

@@ -38,6 +38,6 @@ public enum ClientType
             }
         }
 
-        throw new IllegalArgumentException("Invalid CODE: " + code);
+        throw new IllegalArgumentException("Invalid Client Type CODE: " + code);
     }
 }

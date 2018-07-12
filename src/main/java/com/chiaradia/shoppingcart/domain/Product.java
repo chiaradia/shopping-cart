@@ -3,7 +3,9 @@ package com.chiaradia.shoppingcart.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +34,7 @@ public class Product implements Serializable
     )
     private List<Category> categories = new ArrayList<>();
 
+    private Set<PurchaseOrderItem> purchaseOrderItems = new HashSet<>();
 
     public Product()
     {
@@ -91,6 +94,13 @@ public class Product implements Serializable
         this.categories = categories;
     }
 
+    public Set<PurchaseOrderItem> getPurchaseOrderItems() {
+        return purchaseOrderItems;
+    }
+
+    public void setPurchaseOrderItems(Set<PurchaseOrderItem> purchaseOrderItems) {
+        this.purchaseOrderItems = purchaseOrderItems;
+    }
 
     @Override
     public boolean equals(Object o)
@@ -115,4 +125,5 @@ public class Product implements Serializable
     {
         return id.hashCode();
     }
+
 }

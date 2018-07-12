@@ -1,6 +1,8 @@
 package com.chiaradia.shoppingcart.domain;
 
 import com.chiaradia.shoppingcart.domain.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,8 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Client implements Serializable
-{
+public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,21 +32,22 @@ public class Client implements Serializable
     private String cpfCnpj;
     private Integer type;
 
-    @OneToMany (mappedBy = "client")
+    @JsonManagedReference //Clients can serialize address - Avoid cyclic reference
+    @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name="PHONE_NUMBERS")
+    @CollectionTable(name = "PHONE_NUMBERS")
     private Set<String> phoneNumbers = new HashSet<>();
 
+    @OneToMany(mappedBy = "client")
+    private List<PurchaseOrder> purchaseOrders = new ArrayList<>();
 
-    public Client()
-    {
+    public Client() {
     }
 
 
-    public Client(String name, String email, String cpfCnpj, ClientType type)
-    {
+    public Client(String name, String email, String cpfCnpj, ClientType type) {
         this.name = name;
         this.email = email;
         this.cpfCnpj = cpfCnpj;
@@ -53,86 +55,80 @@ public class Client implements Serializable
     }
 
 
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
 
-    public String getCpfCnpj()
-    {
+    public String getCpfCnpj() {
         return cpfCnpj;
     }
 
 
-    public void setCpfCnpj(String cpfCnpj)
-    {
+    public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj;
     }
 
 
-    public ClientType getType()
-    {
+    public ClientType getType() {
         return ClientType.toEnum(this.type);
     }
 
 
-    public void setType(ClientType type)
-    {
+    public void setType(ClientType type) {
         this.type = type.getCode();
     }
 
 
-    public List<Address> getAddresses()
-    {
+    public List<Address> getAddresses() {
         return addresses;
     }
 
 
-    public void setAddresses(List<Address> addresses)
-    {
+    public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
     }
 
 
-    public Set<String> getPhoneNumbers()
-    {
+    public Set<String> getPhoneNumbers() {
         return phoneNumbers;
     }
 
 
-    public void setPhoneNumbers(Set<String> phoneNumbers)
-    {
+    public void setPhoneNumbers(Set<String> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
+    }
+
+    public List<PurchaseOrder> getPurchaseOrders() {
+        return purchaseOrders;
+    }
+
+    public void setPurchaseOrders(List<PurchaseOrder> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
 }

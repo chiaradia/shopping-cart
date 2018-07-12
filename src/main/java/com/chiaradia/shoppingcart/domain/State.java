@@ -1,5 +1,7 @@
 package com.chiaradia.shoppingcart.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class State implements Serializable
     private Integer id;
     private String name;
 
+    @JsonBackReference
     @OneToMany (mappedBy = "state")
     private List<City> cities = new ArrayList<>();
 
