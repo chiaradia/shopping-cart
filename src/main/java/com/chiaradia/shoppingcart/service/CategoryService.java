@@ -22,20 +22,29 @@ public class CategoryService
 
     public Category findCategory(Integer id)
     {
-        return fincCategoryChecked(id);
+        return findCategoryChecked(id);
     }
 
-    public Category createCategory(Category category){
+
+    public Category createCategory(Category category)
+    {
 
         return this.categoryRepository.save(category);
     }
 
-    private Category fincCategoryChecked(Integer id)
+
+    public Category updateCategory(Category category)
+    {
+        findCategoryChecked(category.getId());
+        return this.categoryRepository.save(category);
+    }
+
+
+    private Category findCategoryChecked(Integer id)
     {
         return this.categoryRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));
     }
-
 
 
 }
