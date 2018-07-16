@@ -25,11 +25,17 @@ public class CategoryService
         return fincCategoryChecked(id);
     }
 
+    public Category createCategory(Category category){
+
+        return this.categoryRepository.save(category);
+    }
 
     private Category fincCategoryChecked(Integer id)
     {
         return this.categoryRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));
     }
+
+
 
 }
