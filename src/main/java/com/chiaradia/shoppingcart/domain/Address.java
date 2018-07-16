@@ -1,7 +1,6 @@
 package com.chiaradia.shoppingcart.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,7 @@ public class Address implements Serializable
     private String neighborhood;
     private String zip;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="client_id")
     private Client client;

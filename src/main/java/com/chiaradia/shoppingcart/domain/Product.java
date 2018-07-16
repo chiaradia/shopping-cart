@@ -1,6 +1,6 @@
 package com.chiaradia.shoppingcart.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Product implements Serializable
@@ -25,25 +26,42 @@ public class Product implements Serializable
     private String name;
     private Double price;
 
-    @JsonBackReference //Used to avoid cyclic reference
+    @JsonIgnore //Used to avoid cyclic reference
     @ManyToMany
     @JoinTable(
         name = "PRODUCT_CATEGORY",
-        joinColumns = @JoinColumn(name="product_id"),
+        joinColumns = @JoinColumn(name = "product_id"),
         inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.product")
     private Set<PurchaseOrderItem> purchaseOrderItems = new HashSet<>();
+
 
     public Product()
     {
     }
 
+
     public Product(String name, Double price)
     {
         this.name = name;
         this.price = price;
+    }
+
+
+    @JsonIgnore
+    public List<PurchaseOrder> getPurchaseOrders()
+    {
+        List<PurchaseOrder> purchaseOrders = new ArrayList<>();
+        for (PurchaseOrderItem x : this.purchaseOrderItems)
+        {
+            purchaseOrders.add(x.getPurchaseOrder());
+        }
+        return purchaseOrders;
+
     }
 
 
@@ -94,13 +112,18 @@ public class Product implements Serializable
         this.categories = categories;
     }
 
-    public Set<PurchaseOrderItem> getPurchaseOrderItems() {
+
+    public Set<PurchaseOrderItem> getPurchaseOrderItems()
+    {
         return purchaseOrderItems;
     }
 
-    public void setPurchaseOrderItems(Set<PurchaseOrderItem> purchaseOrderItems) {
+
+    public void setPurchaseOrderItems(Set<PurchaseOrderItem> purchaseOrderItems)
+    {
         this.purchaseOrderItems = purchaseOrderItems;
     }
+
 
     @Override
     public boolean equals(Object o)

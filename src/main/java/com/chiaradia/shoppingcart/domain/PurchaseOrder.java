@@ -1,16 +1,24 @@
 package com.chiaradia.shoppingcart.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class PurchaseOrder implements Serializable {
+public class PurchaseOrder implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +26,7 @@ public class PurchaseOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instant;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
@@ -32,77 +40,116 @@ public class PurchaseOrder implements Serializable {
     @JoinColumn(name = "deliver_address_id")
     private Address deliverAddress;
 
+    @OneToMany(mappedBy = "id.purchaseOrder")
     private Set<PurchaseOrderItem> purchaseOrderItems = new HashSet<>();
 
-    public PurchaseOrder(){
+
+    public PurchaseOrder()
+    {
 
     }
 
-    public PurchaseOrder(Date instant, Payment payment, Client client, Address deliverAddress) {
+
+    public PurchaseOrder(Date instant, Payment payment, Client client, Address deliverAddress)
+    {
         this.instant = instant;
         this.payment = payment;
         this.client = client;
         this.deliverAddress = deliverAddress;
     }
 
-    public Integer getId() {
+
+    public Integer getId()
+    {
         return id;
     }
 
-    public void setId(Integer id) {
+
+    public void setId(Integer id)
+    {
         this.id = id;
     }
 
-    public Date getInstant() {
+
+    public Date getInstant()
+    {
         return instant;
     }
 
-    public void setInstant(Date instant) {
+
+    public void setInstant(Date instant)
+    {
         this.instant = instant;
     }
 
-    public Payment getPayment() {
+
+    public Payment getPayment()
+    {
         return payment;
     }
 
-    public void setPayment(Payment payment) {
+
+    public void setPayment(Payment payment)
+    {
         this.payment = payment;
     }
 
-    public Client getClient() {
+
+    public Client getClient()
+    {
         return client;
     }
 
-    public void setClient(Client client) {
+
+    public void setClient(Client client)
+    {
         this.client = client;
     }
 
-    public Address getDeliverAddress() {
+
+    public Address getDeliverAddress()
+    {
         return deliverAddress;
     }
 
-    public void setDeliverAddress(Address deliverAddress) {
+
+    public void setDeliverAddress(Address deliverAddress)
+    {
         this.deliverAddress = deliverAddress;
     }
 
-    public Set<PurchaseOrderItem> getPurchaseOrderItems() {
+
+    public Set<PurchaseOrderItem> getPurchaseOrderItems()
+    {
         return purchaseOrderItems;
     }
 
-    public void setPurchaseOrderItems(Set<PurchaseOrderItem> purchaseOrderItems) {
+
+    public void setPurchaseOrderItems(Set<PurchaseOrderItem> purchaseOrderItems)
+    {
         this.purchaseOrderItems = purchaseOrderItems;
     }
 
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
         PurchaseOrder that = (PurchaseOrder) o;
         return Objects.equals(id, that.id);
     }
 
+
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
 
         return Objects.hash(id);
     }

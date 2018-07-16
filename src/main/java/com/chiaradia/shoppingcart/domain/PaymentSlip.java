@@ -1,15 +1,17 @@
 package com.chiaradia.shoppingcart.domain;
 
 import com.chiaradia.shoppingcart.domain.enums.PaymentState;
-
-import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
+import javax.persistence.Entity;
 
 @Entity
 public class PaymentSlip extends Payment{
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date notAfter;
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date paymentDate;
 
     public PaymentSlip() {

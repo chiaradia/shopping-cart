@@ -1,8 +1,7 @@
 package com.chiaradia.shoppingcart.domain;
 
 import com.chiaradia.shoppingcart.domain.enums.ClientType;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,7 +31,6 @@ public class Client implements Serializable {
     private String cpfCnpj;
     private Integer type;
 
-    @JsonManagedReference //Clients can serialize address - Avoid cyclic reference
     @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
 
@@ -40,6 +38,7 @@ public class Client implements Serializable {
     @CollectionTable(name = "PHONE_NUMBERS")
     private Set<String> phoneNumbers = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<PurchaseOrder> purchaseOrders = new ArrayList<>();
 

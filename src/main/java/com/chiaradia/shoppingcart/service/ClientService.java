@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClientService {
+public class ClientService
+{
 
     private final ClientRepository clientRepository;
 
@@ -15,12 +16,14 @@ public class ClientService {
     @Autowired
     public ClientService(final ClientRepository clientRepository)
     {
+
         this.clientRepository = clientRepository;
     }
 
 
     public Client findClient(Integer id)
     {
+
         return findClientChecked(id);
     }
 
@@ -28,7 +31,7 @@ public class ClientService {
     private Client findClientChecked(Integer id)
     {
         return this.clientRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));
+            .orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));
     }
 
 }

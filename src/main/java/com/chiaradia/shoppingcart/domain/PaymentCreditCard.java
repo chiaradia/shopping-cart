@@ -1,7 +1,6 @@
 package com.chiaradia.shoppingcart.domain;
 
 import com.chiaradia.shoppingcart.domain.enums.PaymentState;
-
 import javax.persistence.Entity;
 
 @Entity
